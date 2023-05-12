@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.final_todo.R;
 import com.example.final_todo.model.Task;
+import com.example.final_todo.database.TaskDao;
+import com.example.final_todo.database.TaskDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +42,33 @@ public class TaskFragment extends Fragment {
     }
 
     private List<Task> getTasks() {
-        // Replace with your logic to fetch the task list from a data source
+        // Replace this code with your logic to fetch tasks from a data source
         List<Task> taskList = new ArrayList<>();
-        taskList.add(new Task("Task 1", "Description 1"));
-        taskList.add(new Task("Task 2", "Description 2"));
-        taskList.add(new Task("Task 3", "Description 3"));
+
+        // Example: Fetch tasks from a database
+        // Assuming you have a TaskDao and TaskDatabase setup using Room
+        TaskDao taskDao = TaskDatabase.getInstance(requireContext()).taskDao();
+        taskList = taskDao.getAllTasks();
+
+        // Example: Fetch tasks from an API
+        // Assuming you have a TaskService setup using Retrofit
+        TaskService taskService = RetrofitClient.getClient().create(TaskService.class);
+        Call<List<Task>> call = taskService.getTasks();
+        try {
+            Response<List<Task>> response = call.execute();
+            if (response.isSuccessful()) {
+                taskList = response.body();
+            } else {
+                // Handle error
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Handle exception
+        }
+
         return taskList;
     }
+
 
     private class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 

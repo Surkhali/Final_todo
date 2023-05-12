@@ -3,7 +3,6 @@ package com.example.final_todo.ui;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,6 +36,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         Task task = taskList.get(position);
         holder.titleTextView.setText(task.getTitle());
         holder.descriptionTextView.setText(task.getDescription());
+        holder.dateTextView.setText(task.getDate());
+        holder.timeTextView.setText(task.getTime());
 
         // Handle edit button click
         holder.editIcon.setOnClickListener(v -> {
@@ -62,6 +63,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         private TextView titleTextView;
         private TextView descriptionTextView;
+        private TextView dateTextView;
+        private TextView timeTextView;
         private ImageView editIcon;
         private ImageView deleteIcon;
 
@@ -69,6 +72,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             super(itemView);
             titleTextView = itemView.findViewById(R.id.title_text_view);
             descriptionTextView = itemView.findViewById(R.id.description_text_view);
+            dateTextView = itemView.findViewById(R.id.date_text_view);
+            timeTextView = itemView.findViewById(R.id.time_text_view);
             editIcon = itemView.findViewById(R.id.edit_icon);
             deleteIcon = itemView.findViewById(R.id.delete_icon);
         }

@@ -15,11 +15,35 @@
         android:imeOptions="actionDone"
         android:singleLine="true" />
 
+    <EditText
+        android:id="@+id/editTextDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextTitle"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter task description" />
+
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextDescription"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter task date" />
+
+    <EditText
+        android:id="@+id/editTextTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextDate"
+        android:layout_marginBottom="16dp"
+        android:hint="Enter task time" />
+
     <Button
         android:id="@+id/buttonAddTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextTitle"
+        android:layout_below="@id/editTextTime"
         android:text="Add Task" />
 
     <androidx.recyclerview.widget.RecyclerView

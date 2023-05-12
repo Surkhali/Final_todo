@@ -41,7 +41,7 @@ public class AddTaskDialog extends AppCompatDialogFragment {
                         String description = descriptionEditText.getText().toString().trim();
 
                         if (!title.isEmpty()) {
-                            Task task = new Task(title, description);
+                            Task task = new Task(title, description, "", ""); // Provide default values for date and time
                             listener.onTaskAdded(task);
                         }
                     }

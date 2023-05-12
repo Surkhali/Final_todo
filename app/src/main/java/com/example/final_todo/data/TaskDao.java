@@ -7,7 +7,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 import androidx.lifecycle.LiveData;
 
-
 import com.example.final_todo.model.Task;
 
 import java.util.List;

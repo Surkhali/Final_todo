@@ -1,3 +1,5 @@
+package com.example.final_todo.model;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
