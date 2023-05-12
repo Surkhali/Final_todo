@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Final-Todo</string>
+    <string name="edit_icon_description">Edit</string>
+    <string name="delete_icon_description">Delete</string>
+
+
+</resources>
