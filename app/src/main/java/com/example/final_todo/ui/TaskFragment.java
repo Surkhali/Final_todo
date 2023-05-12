@@ -2,26 +2,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.final_todo.R;
 import com.example.final_todo.model.Task;
-import com.example.final_todo.database.TaskDao;
-import com.example.final_todo.database.TaskDatabase;
+import com.example.final_todo.viewmodel.TaskViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TaskFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private TaskAdapter taskAdapter;
+    private TaskViewModel taskViewModel;
 
     @Nullable
     @Override
@@ -34,41 +34,20 @@ public class TaskFragment extends Fragment {
         taskAdapter = new TaskAdapter();
         recyclerView.setAdapter(taskAdapter);
 
-        // Populate task list and update the adapter
-        List<Task> taskList = getTasks();  // Replace with your logic to fetch the task list
-        taskAdapter.setTaskList(taskList);
+        // Initialize the TaskViewModel
+        taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+
+        // Observe the task list from the ViewModel
+        taskViewModel.getAllTasks().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                // Update the UI with the new list of tasks
+                taskAdapter.setTaskList(tasks);
+            }
+        });
 
         return view;
     }
-
-    private List<Task> getTasks() {
-        // Replace this code with your logic to fetch tasks from a data source
-        List<Task> taskList = new ArrayList<>();
-
-        // Example: Fetch tasks from a database
-        // Assuming you have a TaskDao and TaskDatabase setup using Room
-        TaskDao taskDao = TaskDatabase.getInstance(requireContext()).taskDao();
-        taskList = taskDao.getAllTasks();
-
-        // Example: Fetch tasks from an API
-        // Assuming you have a TaskService setup using Retrofit
-        TaskService taskService = RetrofitClient.getClient().create(TaskService.class);
-        Call<List<Task>> call = taskService.getTasks();
-        try {
-            Response<List<Task>> response = call.execute();
-            if (response.isSuccessful()) {
-                taskList = response.body();
-            } else {
-                // Handle error
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Handle exception
-        }
-
-        return taskList;
-    }
-
 
     private class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
@@ -106,7 +85,7 @@ public class TaskFragment extends Fragment {
             TaskViewHolder(@NonNull View itemView) {
                 super(itemView);
                 titleTextView = itemView.findViewById(R.id.title_text_view);
-                descriptionTextView = itemView.findViewById(R.id.title_text_view);
+                descriptionTextView = itemView.findViewById(R.id.description_text_view);
             }
         }
     }
