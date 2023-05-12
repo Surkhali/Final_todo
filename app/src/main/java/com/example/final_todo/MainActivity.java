@@ -1,5 +1,3 @@
-package com.example.final_todo;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,13 +5,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.final_todo.R;
 import com.example.final_todo.model.Task;
 import com.example.final_todo.ui.TaskAdapter;
-import com.example.final_todo.database.TaskDao;
-import com.example.final_todo.database.TaskDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
     private EditText dateEditText; // Added
     private EditText timeEditText; // Added
     private Button addButton;
+    private Button navigateButton; // Added
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
         dateEditText = findViewById(R.id.editTextDate); // Added
         timeEditText = findViewById(R.id.editTextTime); // Added
         addButton = findViewById(R.id.buttonAddTask);
+        navigateButton = findViewById(R.id.navigateButton); // Added
 
         // Create the task list and adapter
         taskList = new ArrayList<>();
@@ -54,6 +55,14 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
             @Override
             public void onClick(View v) {
                 addTask();
+            }
+        });
+
+        // Set click listener for the Navigate button
+        navigateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToTaskFragment();
             }
         });
     }
@@ -85,6 +94,12 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
         timeEditText.setText("");
     }
 
+    private void navigateToTaskFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, new TaskFragment());
+        fragmentTransaction.commit();
+    }
 
     @Override
     public void onEditClick(Task task) {

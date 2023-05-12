@@ -15,7 +15,6 @@ import com.example.final_todo.model.Task;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
-
     private List<Task> taskList;
     private OnItemClickListener listener;
 
@@ -27,31 +26,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     @NonNull
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task, parent, false);
         return new TaskViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         Task task = taskList.get(position);
-        holder.titleTextView.setText(task.getTitle());
-        holder.descriptionTextView.setText(task.getDescription());
-        holder.dateTextView.setText(task.getDate());
-        holder.timeTextView.setText(task.getTime());
-
-        // Handle edit button click
-        holder.editIcon.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onEditClick(task);
-            }
-        });
-
-        // Handle delete button click
-        holder.deleteIcon.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onDeleteClick(task);
-            }
-        });
+        holder.bind(task, listener);
     }
 
     @Override
@@ -59,28 +41,42 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         return taskList.size();
     }
 
-    static class TaskViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView titleTextView;
-        private TextView descriptionTextView;
-        private TextView dateTextView;
-        private TextView timeTextView;
-        private ImageView editIcon;
-        private ImageView deleteIcon;
-
-        TaskViewHolder(@NonNull View itemView) {
-            super(itemView);
-            titleTextView = itemView.findViewById(R.id.title_text_view);
-            descriptionTextView = itemView.findViewById(R.id.description_text_view);
-            dateTextView = itemView.findViewById(R.id.date_text_view);
-            timeTextView = itemView.findViewById(R.id.time_text_view);
-            editIcon = itemView.findViewById(R.id.edit_icon);
-            deleteIcon = itemView.findViewById(R.id.delete_icon);
-        }
-    }
-
     public interface OnItemClickListener {
         void onEditClick(Task task);
         void onDeleteClick(Task task);
+    }
+
+    public static class TaskViewHolder extends RecyclerView.ViewHolder {
+        private TextView titleTextView;
+        private TextView descriptionTextView;
+        private ImageView editImageView;
+        private ImageView deleteImageView;
+
+        public TaskViewHolder(@NonNull View itemView) {
+            super(itemView);
+            titleTextView = itemView.findViewById(R.id.titleTextView);
+            descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
+            editImageView = itemView.findViewById(R.id.editImageView);
+            deleteImageView = itemView.findViewById(R.id.deleteImageView);
+        }
+
+        public void bind(Task task, OnItemClickListener listener) {
+            titleTextView.setText(task.getTitle());
+            descriptionTextView.setText(task.getDescription());
+
+            editImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onEditClick(task);
+                }
+            });
+
+            deleteImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onDeleteClick(task);
+                }
+            });
+        }
     }
 }

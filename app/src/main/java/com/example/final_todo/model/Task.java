@@ -2,9 +2,24 @@ package com.example.final_todo.model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.ColumnInfo;
+
+import com.example.final_todo.model.Task;
+
 
 @Entity(tableName = "task_table")
 public class Task {
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
+    @ColumnInfo(name = "isCompleted")
+    private boolean isCompleted;
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;

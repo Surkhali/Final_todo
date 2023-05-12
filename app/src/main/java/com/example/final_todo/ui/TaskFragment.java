@@ -1,7 +1,10 @@
+package com.example.final_todo.ui;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -69,7 +72,7 @@ public class TaskFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return taskList.size();
+            return taskList != null ? taskList.size() : 0;
         }
 
         public void setTaskList(List<Task> taskList) {
