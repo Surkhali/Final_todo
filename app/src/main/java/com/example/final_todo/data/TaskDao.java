@@ -44,6 +44,10 @@ public interface TaskDao {
     @Query("UPDATE task_table SET isCompleted = :isCompleted WHERE id = :taskId")
     void setTaskCompleted(int taskId, boolean isCompleted);
 
+    @Query("SELECT * FROM tasks WHERE category = :category")
+    LiveData<List<Task>> getTasksByCategory(String category);
+
+
     // Add more methods as per your application's requirements
 
 }

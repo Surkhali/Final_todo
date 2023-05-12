@@ -14,7 +14,7 @@ import androidx.room.ColumnInfo;
 import com.example.final_todo.model.Task;
 import com.example.final_todo.data.TaskDao;
 
-@Database(entities = {Task.class}, version = 2)
+@Database(entities = {Task.class}, version = 1, exportSchema = false)
 public abstract class TaskDatabase extends RoomDatabase {
 
     private static TaskDatabase instance;

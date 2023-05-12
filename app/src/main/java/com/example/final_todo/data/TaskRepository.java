@@ -4,7 +4,6 @@ import android.app.Application;
 import android.os.AsyncTask;
 import com.example.final_todo.model.Task;
 
-
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
@@ -22,6 +21,10 @@ public class TaskRepository {
 
     public LiveData<List<Task>> getAllTasks() {
         return allTasks;
+    }
+
+    public LiveData<List<Task>> getTasksByCategory(String category) {
+        return taskDao.getTasksByCategory(category);
     }
 
     public void insert(Task task) {

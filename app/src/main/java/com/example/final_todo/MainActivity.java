@@ -5,10 +5,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 
 import com.example.final_todo.R;
 import com.example.final_todo.model.Task;
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnIte
         fragmentTransaction.replace(R.id.container, new TaskFragment());
         fragmentTransaction.commit();
     }
+
 
     @Override
     public void onEditClick(Task task) {
